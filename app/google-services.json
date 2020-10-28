@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "929926885709",
+    "firebase_url": "https://jadwat-health.firebaseio.com",
+    "project_id": "jadwat-health",
+    "storage_bucket": "jadwat-health.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:929926885709:android:04085abc768852a2efc704",
+        "android_client_info": {
+          "package_name": "com.jadwat.healthapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "929926885709-s871rf066sgtdcpe2f31gpbsolmtnabt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcezaO5gKKyYLoMoSK_hzNTEFdOAYSzkw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "929926885709-s871rf066sgtdcpe2f31gpbsolmtnabt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

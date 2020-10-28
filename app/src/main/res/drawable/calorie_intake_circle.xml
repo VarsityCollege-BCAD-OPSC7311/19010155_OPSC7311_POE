@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--                        code attribution                        -->
+    <!-- Author:    Coding in Flow                                      -->
+    <!-- Link:      https://www.youtube.com/watch?v=YsHHXg1vbcc&t=1s    -->
+    <item>
+        <shape
+            android:shape="ring"
+            android:thicknessRatio="12"
+            android:useLevel="false">
+            <solid android:color="#ddd" />
+        </shape>
+    </item>
+    <item>
+        <rotate
+            android:fromDegrees="-90"
+            android:toDegrees="-90">
+            <shape
+                android:shape="ring"
+                android:thicknessRatio="12"
+                android:useLevel="true">
+                <solid android:color="@color/colorAccent" />
+            </shape>
+        </rotate>
+    </item>
+    <!--                               end                               -->
+</layer-list>

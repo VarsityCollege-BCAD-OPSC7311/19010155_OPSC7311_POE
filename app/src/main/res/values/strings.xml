@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Jadwat Health</string>
+    <string name="greeting_P1">WELCOME TO</string>
+    <string name="greeting_P2">JADWAT HEALTH</string>
+    <string name="or_line">━━━━━━━━━━━━━━━━ OR ━━━━━━━━━━━━━━━━</string>
+    <string name="height_weight">Height &amp; Weight</string>
+    <string name="age_gender">Age &amp; Gender</string>
+    <string name="goals">Goals for Weight &amp; Calorie Intake</string>
+    <string name="calories_left">kcals Remaining</string>
+    <string name="line">━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</string>
+
+</resources>
