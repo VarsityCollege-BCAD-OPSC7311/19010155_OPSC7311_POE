@@ -2,12 +2,14 @@ package com.jadwat.healthapp;
 
 public class LogWeightProgress {
 
+    private String Date;
     private double Weight;
 
     public LogWeightProgress() {
     }
 
-    public LogWeightProgress(double weight) {
+    public LogWeightProgress(String date, double weight) {
+        Date = date;
         Weight = weight;
     }
 
@@ -19,7 +21,11 @@ public class LogWeightProgress {
         Weight = weight;
     }
 
-    public String ToString() {
-        return "Weight: " + Weight;
+    public String getDate() {
+        return Date;
+    }
+
+    public void setDate(String date) {
+        Date = date;
     }
 }

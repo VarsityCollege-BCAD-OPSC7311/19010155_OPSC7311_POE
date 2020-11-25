@@ -20,20 +20,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.nio.channels.AsynchronousChannelGroup;
-
 
 public class SettingsFragment extends Fragment {
 
     DatabaseReference ref;
     TextView Email;
-    EditText txtAge, txtHeight, txtHeightFt, txtHeightIn, txtWeight, txtWeightGoal, txtCaloriesGoal;
+    EditText txtAge, txtHeight, txtHeightFt, txtHeightIn, txtWeightGoal, txtCaloriesGoal;
     Button Edit, Save, Logout;
     ToggleButton tbMale, tbFemale;
     String email, gender, measurement;
     String emailDB = MainActivity.shortEmail;
     int age, calories;
-    double height, heightInches, weight, weightGoal;
+    double height, heightInches, weightGoal;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -49,7 +47,6 @@ public class SettingsFragment extends Fragment {
         tbMale = v.findViewById(R.id.tbSettingsMale);
         tbFemale = v.findViewById(R.id.tbSettingsFemale);
         txtHeight = v.findViewById(R.id.txtSettingsHeightMet);
-        txtWeight = v.findViewById(R.id.txtSettingsWeight);
         txtWeightGoal = v.findViewById(R.id.txtSettingsWeightGoal);
         txtCaloriesGoal = v.findViewById(R.id.txtSettingsCaloriesGoal);
         txtHeightFt = v.findViewById(R.id.txtSettingsHeightFt);
@@ -134,11 +131,9 @@ public class SettingsFragment extends Fragment {
                     txtHeightIn.setVisibility(View.INVISIBLE);
 
                     height = Double.parseDouble(snapshot.child("heightInCm").getValue().toString());
-                    weight = Double.parseDouble(snapshot.child("weightInKilos").getValue().toString());
                     weightGoal = Double.parseDouble(snapshot.child("weightGoalMetric").getValue().toString());
 
                     txtHeight.setText(height + "");
-                    txtWeight.setText(weight + "");
                     txtWeightGoal.setText(weightGoal + "");
 
                     
@@ -150,12 +145,10 @@ public class SettingsFragment extends Fragment {
 
                     height = Double.parseDouble(snapshot.child("heightInFeet").getValue().toString());
                     heightInches = Double.parseDouble(snapshot.child("heightInInches").getValue().toString());
-                    weight = Double.parseDouble(snapshot.child("weightInPounds").getValue().toString());
                     weightGoal = Double.parseDouble(snapshot.child("weightGoalImperial").getValue().toString());
 
                     txtHeightFt.setText(height + "");
                     txtHeightIn.setText(heightInches + "");
-                    txtWeight.setText(weight + "");
                     txtWeightGoal.setText(weightGoal + "");
                 }
 
@@ -171,13 +164,11 @@ public class SettingsFragment extends Fragment {
     private void ChangeInfo() {
         if (measurement.equals("Metric")) {
             height = Double.parseDouble(txtHeight.getText().toString());
-            weight = Double.parseDouble(txtWeight.getText().toString());
             age = Integer.parseInt(txtAge.getText().toString());
             weightGoal = Double.parseDouble(txtWeightGoal.getText().toString());
             calories = Integer.parseInt(txtCaloriesGoal.getText().toString());
 
             ref.child("heightInCm").setValue(height);
-            ref.child("weightInKilos").setValue(weight);
             ref.child("age").setValue(age);
             ref.child("gender").setValue(gender);
             ref.child("weightGoalMetric").setValue(weightGoal);
@@ -187,14 +178,13 @@ public class SettingsFragment extends Fragment {
         } else if (measurement.equals("Imperial")) {
             height = Double.parseDouble(txtHeightFt.getText().toString());
             heightInches = Double.parseDouble(txtHeightIn.getText().toString());
-            weight = Double.parseDouble(txtWeight.getText().toString());
             age = Integer.parseInt(txtAge.getText().toString());
             weightGoal = Double.parseDouble(txtWeightGoal.getText().toString());
             calories = Integer.parseInt(txtCaloriesGoal.getText().toString());
 
             ref.child("heightInFeet").setValue(height);
             ref.child("heightInInches").setValue(heightInches);
-            ref.child("weightInPounds").setValue(weight);
+            //ref.child("weightInPounds").setValue(weight);
             ref.child("age").setValue(age);
             ref.child("gender").setValue(gender);
             ref.child("weightGoalImperial").setValue(weightGoal);
@@ -205,7 +195,6 @@ public class SettingsFragment extends Fragment {
     private void DisableComponents() {
         txtAge.setEnabled(false);
         txtHeight.setEnabled(false);
-        txtWeight.setEnabled(false);
         txtWeightGoal.setEnabled(false);
         txtCaloriesGoal.setEnabled(false);
         txtHeightFt.setEnabled(false);
@@ -223,7 +212,6 @@ public class SettingsFragment extends Fragment {
 
     private void EnableComponents() {
         txtAge.setEnabled(true);
-        txtWeight.setEnabled(true);
         txtWeightGoal.setEnabled(true);
         txtCaloriesGoal.setEnabled(true);
         Save.setEnabled(true);

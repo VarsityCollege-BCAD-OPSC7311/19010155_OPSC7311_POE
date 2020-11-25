@@ -33,9 +33,11 @@ public class HomeFragment extends Fragment {
     public static String date;
     String emailDB = MainActivity.shortEmail;
     int caloriesFromDB, caloriesLeft, caloriesUsed;
+    double weight = UserInformationScreen.weight;
     boolean check = false;
 
     LogCalorieIntake cal;
+    LogWeightProgress wei;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -71,7 +73,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        myRef.child(emailDB).child("Weight Progress").child(date).setValue(UserInformationScreen.weight);
+        StoreWeightProgress();
 
         return v;
     }
@@ -85,6 +87,8 @@ public class HomeFragment extends Fragment {
         tvCalConsumed.setText(caloriesUsed + "");
 
         pbCalories.setProgress(caloriesUsed);
+
+        myRef.child(emailDB).child("Calorie Intake").child(date).child("caloriesConsumed").setValue(caloriesUsed);
 
         check = true;
     }
@@ -134,8 +138,10 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void StoreCalorieIntake() {
+    private void StoreWeightProgress() {
+        wei = new LogWeightProgress(date, weight);
 
+        myRef.child(emailDB).child("Weight Progress").child("Day 1").setValue(wei);
     }
 
     //----------------------------------------code attribution----------------------------------------

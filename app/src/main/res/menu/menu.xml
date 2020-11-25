@@ -3,9 +3,12 @@
 
     <item
         android:id="@+id/home"
-        android:title="Home"
-        android:icon="@drawable/ic_home"/>
-
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/currentLevels"
+        android:icon="@drawable/ic_levels"
+        android:title="Current Levels" />
     <item
         android:id="@+id/camera"
         android:title="Capture Meal"

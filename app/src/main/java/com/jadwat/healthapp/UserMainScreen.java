@@ -3,8 +3,10 @@ package com.jadwat.healthapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+
 import android.os.Bundle;
 import android.view.MenuItem;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class UserMainScreen extends AppCompatActivity {
@@ -29,14 +31,13 @@ public class UserMainScreen extends AppCompatActivity {
 
             if (item.getItemId() == R.id.home) {
                 frag = new HomeFragment();
-            }
-            else if (item.getItemId() == R.id.camera) {
+            } else if (item.getItemId() == R.id.currentLevels) {
+                frag = new CurrentLevelsFragment();
+            } else if (item.getItemId() == R.id.camera) {
                 frag = new CaptureMealFragment();
-            }
-            else if(item.getItemId() == R.id.progress) {
+            } else if (item.getItemId() == R.id.progress) {
                 frag = new WeightProgressFragment();
-            }
-            else if (item.getItemId() == R.id.settings) {
+            } else if (item.getItemId() == R.id.settings) {
                 frag = new SettingsFragment();
             }
             getSupportFragmentManager().beginTransaction().replace(R.id.container, frag).commit();

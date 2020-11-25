@@ -1,8 +1,6 @@
 package com.jadwat.healthapp;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentContainer;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -28,6 +26,7 @@ public class UserInformationScreen extends AppCompatActivity {
     Button btnContinue, btnBack;
     String gender, measurement, email;
     int age;
+    public static int measurementChecker = 0;
     double heightInCm, heightInFeet, heightInInches, weightGoal, caloriesGoal;
     public static double weight;
 
@@ -202,6 +201,8 @@ public class UserInformationScreen extends AppCompatActivity {
                 weight != 0 | age != 0 | gender != null | weightGoal != 0 | caloriesGoal != 0) {
 
             if (tbImperial.isChecked()) {
+                measurementChecker = 1;
+
                 heightInFeet = Double.parseDouble(txtFeet.getText().toString());
                 heightInInches = Double.parseDouble(txtInches.getText().toString());
                 weight = Double.parseDouble(txtPounds.getText().toString());
@@ -211,7 +212,12 @@ public class UserInformationScreen extends AppCompatActivity {
                 myRef.child(email).child("User Information").setValue(UserInformationImp);
 
                 startActivity(new Intent(getApplicationContext(), UserMainScreen.class));
+
+
+
             } else if (tbMetric.isChecked()) {
+                measurementChecker = 2;
+
                 heightInCm = Double.parseDouble(txtCentimetre.getText().toString());
                 weight = Double.parseDouble(txtKilogram.getText().toString());
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,21 +21,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class WeightProgressFragment extends Fragment {
 
-    private DatabaseReference ref;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("Users");
-    List<String> weightList;
-    ListView lstWeight;
-    EditText txtAddWeight;
-    Button AddWeight;
-    ArrayAdapter adapter;
-    LogWeightProgress wei;
+    private DatabaseReference ref, ref2;
     String emailDB = MainActivity.shortEmail;
-    LogWeightProgress logWeight;
+    EditText txtAddWeight;
+    ListView List;
+    Button btnAddWeight;
+    String currentDate = HomeFragment.date;
+    String dates, measurement;
+    double weight;
+    int numOfDays;
 
     public WeightProgressFragment() {
         // Required empty public constructor
@@ -45,52 +43,94 @@ public class WeightProgressFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_weight_progress, container, false);
 
-        lstWeight = v.findViewById(R.id.lstWeight);
-        AddWeight = v.findViewById(R.id.btnAddWeight);
+        List = v.findViewById(R.id.WeightListView);
         txtAddWeight = v.findViewById(R.id.txtAddWeight);
+        btnAddWeight = v.findViewById(R.id.btnAddWeight);
+        ref = FirebaseDatabase.getInstance().getReference("Users").child(emailDB).child("Weight Progress");
+        ref2 = FirebaseDatabase.getInstance().getReference("Users").child(emailDB).child("User Information");
 
-        LoadWeight();
+        ref2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                measurement = snapshot.child("measurement").getValue().toString();
+            }
 
-        AddWeight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("Error", error.getMessage());
+            }
+        });
+
+        LoadInfo();
+
+        btnAddWeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AddToDatabase();
+                AddWeight(numOfDays);
             }
         });
 
         return v;
     }
 
-    private void LoadWeight() {
-        myRef.addValueEventListener(new ValueEventListener() {
+    private void LoadInfo() {
+
+        final ArrayList<String> arrayList = new ArrayList<>();
+
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                wei = new LogWeightProgress();
-                weightList = new ArrayList<String>();
+                for (int i = 0; i < snapshot.getChildrenCount(); i++) {
 
-                for (DataSnapshot weightDB : snapshot.getChildren()) {
-                    wei = weightDB.getValue(LogWeightProgress.class);
-                    weightList.add(wei.ToString());
+                    String disp;
+                    int dayNo = i + 1;
+                    dates = snapshot.child("Day " + dayNo).child("date").getValue().toString();
+                    weight = Double.parseDouble(snapshot.child("Day " + dayNo).child("weight").getValue().toString());
+
+                    if (measurement.equals("Imperial")) {
+                        disp = "Day " + dayNo + "\n" +
+                                "Date: " + dates + "\n" +
+                                "Weight: " + weight + " lbs";
+                        arrayList.add(disp);
+                    }
+                    else if (measurement.equals("Metric")) {
+                        disp = "Day " + dayNo + "\n" +
+                                "Date: " + dates + "\n" +
+                                "Weight: " + weight + " kg";
+                        arrayList.add(disp);
+                    }
+                    numOfDays = Integer.parseInt(String.valueOf(snapshot.getChildrenCount()));
+
                 }
-                adapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, weightList);
 
-                lstWeight.setAdapter(adapter);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, arrayList);
+                List.setAdapter(arrayAdapter);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                Log.d("Error", error.getMessage());
             }
         });
+
     }
 
-    private void AddToDatabase() {
-        double weight = Double.parseDouble(txtAddWeight.getText().toString());
+    private void AddWeight(int num) {
 
-        myRef.child(emailDB).child("Weight Progress").child(HomeFragment.date).setValue(weight);
-        LoadWeight();
+        if (dates.equals(currentDate)) {
+            String newWeight = txtAddWeight.getText().toString();
+            ref.child("Day " + num).child("date").setValue(currentDate);
+            ref.child("Day " + num).child("weight").setValue(newWeight);
+        }
+        else {
+            int newNum = num + 1;
+            String newWeight = txtAddWeight.getText().toString();
+            ref.child("Day " + newNum).child("date").setValue(currentDate);
+            ref.child("Day " + newNum).child("weight").setValue(newWeight);
+        }
+        LoadInfo();
     }
-
-
 }
+
+
